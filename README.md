@@ -101,12 +101,13 @@ Method Name                 | Return Value (type)
 `students_below(threshold)` | `Array` of `Student` objects
 
 ```ruby
-# list_all_students
+# gradebook.list_all_students
 
-{
-  <Course> => [<Student>, <Student>],
-  <Course> => [<Student>]
-}
+#=> {
+#     <Course 1> => [<Student 1>, <Student 2>],
+#     <Course 2> => [<Student 1>],
+#     ...
+#   }
 ```
 
 ## Iteration 4
