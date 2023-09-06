@@ -84,4 +84,21 @@ RSpec.describe Gradebook do
       expect(@gradebook.all_grades[@course_2]).to eq([99, 92])
     end
   end
+
+  describe '#students_in_range' do
+    it 'returns a list of students within a grade range' do
+      @gradebook.add_course(@course_1)
+      @gradebook.add_course(@course_2)
+      @course_1.enroll(@student1)
+      @course_2.enroll(@student2)
+      @student1.log_score(89)
+      @student1.log_score(78)
+      @student2.log_score(99)
+      @student2.log_score(92)
+
+      expect(@gradebook.students_in_range(80.0, 100.0)).to eq([@student1, @student2])
+      expect(@gradebook.students_in_range(90.0, 100.0)).to eq([@student2])
+      expect(@gradebook.students_in_range(70.0, 80.0)).to eq([])
+    end
+  end
 end
