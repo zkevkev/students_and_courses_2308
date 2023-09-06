@@ -67,4 +67,21 @@ RSpec.describe Gradebook do
       expect(@gradebook.students_below(75.0)).to eq([])
     end
   end
+
+  describe '#all_grades' do
+    it 'returns a hash with student grades by course' do
+      @gradebook.add_course(@course_1)
+      @gradebook.add_course(@course_2)
+      @course_1.enroll(@student1)
+      @course_2.enroll(@student2)
+      @student1.log_score(89)
+      @student1.log_score(78)
+      @student2.log_score(99)
+      @student2.log_score(92)
+
+      expect(@gradebook.all_grades).to be_a(Hash)
+      expect(@gradebook.all_grades[@course_1]).to eq([89, 78])
+      expect(@gradebook.all_grades[@course_2]).to eq([99, 92])
+    end
+  end
 end
