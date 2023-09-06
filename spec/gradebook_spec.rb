@@ -44,20 +44,27 @@ RSpec.describe Gradebook do
       @gradebook.add_course(@course_2)
 
       expect(@gradebook.list_all_students).to be_a(Hash)
-      expect(@gradebook.list_all_students[:@course_1]).to eq([@student1, @student2])
+      expect(@gradebook.list_all_students[@course_1]).to eq([@student1, @student2])
+      expect(@gradebook.list_all_students[@course_2]).to eq([@student1, @student2])
     end
   end
 
   describe '#students_below' do
     it 'returns an array of students below the given grading threshold' do
+      @gradebook.add_course(@course_1)
+      @gradebook.add_course(@course_2)
       @course_1.enroll(@student1)
       @course_1.enroll(@student2)
       @course_2.enroll(@student1)
       @course_2.enroll(@student2)
-      @gradebook.add_course(@course_1)
-      @gradebook.add_course(@course_2)
+      @student1.log_score(89)
+      @student1.log_score(78)
+      @student2.log_score(99)
+      @student2.log_score(92)
 
-      
+      expect(@gradebook.students_below(100.0)).to eq([@student1, @student2])
+      expect(@gradebook.students_below(90.0)).to eq([@student1])
+      expect(@gradebook.students_below(75.0)).to eq([])
     end
   end
 end
