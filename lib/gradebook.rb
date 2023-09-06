@@ -43,7 +43,6 @@ class Gradebook
       end
       grade_list[course] = course_grades
     end
-
     grade_list
   end
 
